@@ -5,6 +5,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class Util {
+
     public static Connection connection;
     static String url = "jdbc:mysql://localhost:3306/kata";
     static String user = "root";
