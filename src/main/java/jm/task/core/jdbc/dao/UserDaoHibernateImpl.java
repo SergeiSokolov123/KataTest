@@ -76,4 +76,5 @@ public class UserDaoHibernateImpl implements UserDao {
             session.getTransaction().commit();
         }
     }
+
 }
