@@ -17,18 +17,19 @@ public class UserDaoHibernateImpl implements UserDao {
 
     @Override
     public void createUsersTable() {
-        try (Session session = sessionFactory.openSession() ) {
+
+        try (Session session = sessionFactory.openSession()) {
             session.beginTransaction();
-            session.createSQLQuery("SELECT 1 FROM users LIMIT 1").uniqueResult();
+            session.createSQLQuery("CREATE TABLE IF NOT EXISTS users (id BIGINT PRIMARY KEY AUTO_INCREMENT, name VARCHAR(45) NOT NULL, lastName VARCHAR(45) NOT NULL, age TINYINT NOT NULL)").executeUpdate();
             session.getTransaction().commit();
-        } catch (Exception ex) {
-            try (Session session = sessionFactory.openSession()){
-                session.beginTransaction();
-                session.createSQLQuery("CREATE TABLE IF NOT EXISTS users (id BIGINT PRIMARY KEY AUTO_INCREMENT, name VARCHAR(45) NOT NULL, lastName VARCHAR(45) NOT NULL, age TINYINT NOT NULL)").executeUpdate();
-                session.getTransaction().commit();
+        } catch (Exception e) {
+            if (sessionFactory.getCurrentSession().getTransaction().isActive()) {
+                sessionFactory.getCurrentSession().getTransaction().rollback();
             }
+            throw new RuntimeException("ошибка в createUsersTable ", e);
         }
     }
+
 
     @Override
     public void dropUsersTable() {
@@ -36,6 +37,11 @@ public class UserDaoHibernateImpl implements UserDao {
             session.beginTransaction();
             session.createSQLQuery("DROP TABLE IF EXISTS users").executeUpdate();
             session.getTransaction().commit();
+        } catch (Exception e) {
+            if (sessionFactory.getCurrentSession().getTransaction().isActive()) {
+                sessionFactory.getCurrentSession().getTransaction().rollback();
+            }
+            throw new RuntimeException("ошибка в dropUsersTable ", e);
         }
     }
 
@@ -46,6 +52,11 @@ public class UserDaoHibernateImpl implements UserDao {
             session.beginTransaction();
             session.save(new User(name, lastName, age));
             session.getTransaction().commit();
+        } catch (Exception e) {
+            if (sessionFactory.getCurrentSession().getTransaction().isActive()) {
+                sessionFactory.getCurrentSession().getTransaction().rollback();
+            }
+            throw new RuntimeException("ошибка в saveUser ", e);
         }
     }
 
@@ -58,6 +69,11 @@ public class UserDaoHibernateImpl implements UserDao {
                 session.delete(user);
             }
             session.getTransaction().commit();
+        } catch (Exception e) {
+            if (sessionFactory.getCurrentSession().getTransaction().isActive()) {
+                sessionFactory.getCurrentSession().getTransaction().rollback();
+            }
+            throw new RuntimeException("ошибка в removeUserByID ", e);
         }
     }
 
@@ -74,6 +90,11 @@ public class UserDaoHibernateImpl implements UserDao {
             session.beginTransaction();
             session.createQuery("DELETE FROM User").executeUpdate();
             session.getTransaction().commit();
+        } catch (Exception e) {
+            if (sessionFactory.getCurrentSession().getTransaction().isActive()) {
+                sessionFactory.getCurrentSession().getTransaction().rollback();
+            }
+            throw new RuntimeException("ошибка в cleanUsersTable ", e);
         }
     }
 
