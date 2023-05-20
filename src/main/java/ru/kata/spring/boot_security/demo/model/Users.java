@@ -17,8 +17,8 @@ public class Users implements UserDetails {
     int id;
     private String name;
     private int age;
-    private  String password;
-    @ManyToMany
+    private String password;
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "users_roles",
             joinColumns = @JoinColumn(name = "users_id"),
@@ -28,9 +28,11 @@ public class Users implements UserDetails {
     public Users() {
     }
 
-    public Users(String name, int age) {
+    public Users(String name, int age, String password, Set<Role> roles) {
         this.name = name;
         this.age = age;
+        this.password = password;
+        this.roles = roles;
     }
 
     public int getId() {

@@ -9,7 +9,14 @@
 <form th:action="@{/admin/new}" th:object="${user}" method="post">
     <label>Name: <input type="text" th:field="*{name}"/></label><br/>
     <label>Age: <input type="text" th:field="*{age}"/></label><br/>
+    <label>Password: <input type="password" th:field="*{password}"/></label><br/>
+
     <input type="submit" value="Create User"/>
 </form>
+
+<form th:action="@{/logout}" method="post">
+    <button type="submit">Logout</button>
+</form>
+
 </body>
 </html>

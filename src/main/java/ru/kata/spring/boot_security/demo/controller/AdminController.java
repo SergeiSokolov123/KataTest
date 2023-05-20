@@ -22,6 +22,7 @@ public class AdminController {
         return "users";
     }
 
+
     @GetMapping("/{id}")
     public String getById(Model model, @PathVariable int id) {
         model.addAttribute("user", userService.getById(id));

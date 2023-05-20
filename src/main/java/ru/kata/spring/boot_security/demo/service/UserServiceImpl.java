@@ -2,9 +2,11 @@ package ru.kata.spring.boot_security.demo.service;
 
 import org.apache.velocity.exception.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.kata.spring.boot_security.demo.model.Users;
@@ -13,9 +15,16 @@ import ru.kata.spring.boot_security.demo.repository.UserRepository;
 import java.util.List;
 
 @Service
-public class UserServiceImpl implements UserService , UserDetailsService {
+public class UserServiceImpl implements UserService, UserDetailsService {
+    private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
+
     @Autowired
-    private UserRepository userRepository;
+    public UserServiceImpl(UserRepository userRepository, @Lazy PasswordEncoder passwordEncoder) {
+        this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
+
+    }
 
     @Override
     public List<Users> getAllUsers() {
@@ -30,6 +39,8 @@ public class UserServiceImpl implements UserService , UserDetailsService {
     @Transactional
     @Override
     public void addUser(Users users) {
+        String encodedPassword = passwordEncoder.encode(users.getPassword());
+        users.setPassword(encodedPassword);
         userRepository.save(users);
     }
 

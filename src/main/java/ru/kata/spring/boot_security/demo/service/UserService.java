@@ -18,4 +18,5 @@ public interface UserService {
     void delete(int id);
 
     UserDetails loadUserByUsername(String username);
+
 }

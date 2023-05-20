@@ -20,7 +20,9 @@ public class UserController {
     @GetMapping("/")
     public String getUserData(Model model, Authentication authentication) {
         String username = authentication.getName();
-        model.addAttribute("user",userService.loadUserByUsername(username));
-        return "users";
+        model.addAttribute("user", userService.loadUserByUsername(username));
+        return "user";
     }
+
+
 }
