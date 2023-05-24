@@ -11,7 +11,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "users")
-public class Users implements UserDetails {
+public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     int id;
@@ -25,10 +25,10 @@ public class Users implements UserDetails {
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles = new HashSet<>();
 
-    public Users() {
+    public User() {
     }
 
-    public Users(String name, int age, String password, Set<Role> roles) {
+    public User(String name, int age, String password, Set<Role> roles) {
         this.name = name;
         this.age = age;
         this.password = password;

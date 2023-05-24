@@ -9,6 +9,13 @@
 <form th:action="@{/admin/update/{id}(id=${user.id})}" th:object="${user}" method="post">
     <label>Name: <input type="text" th:field="*{name}"/></label><br/>
     <label>Age: <input type="text" th:field="*{age}"/></label><br/>
+    <label>Password: <input type="password" th:field="*{password}"/></label><br/>
+    <label>Enter role:
+        <select size="2" multiple name="roles" >
+            <option value="1">ADMIN</option>
+            <option selected="selected" value="2">USER</option>
+        </select>
+    </label>
     <input type="submit" value="Save Changes"/>
 </form>
 </body>

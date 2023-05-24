@@ -14,8 +14,13 @@ import ru.kata.spring.boot_security.demo.service.UserService;
 @PreAuthorize("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')")
 public class UserController {
 
+
+    private final UserService userService;
+
     @Autowired
-    UserService userService;
+    public UserController(UserService userService) {
+        this.userService = userService;
+    }
 
     @GetMapping("/")
     public String getUserData(Model model, Authentication authentication) {
