@@ -93,7 +93,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
             </div>
             <div class="modal-body">
-                <form th:action="@{'/admin/' + ${user.id}}" th:object="${user}" method="post">
+                <form th:method="patch" th:action="@{'/admin/' + ${user.id}}" th:object="${user}">
                     <div style="width: 400px; height: 50px; margin-left: auto; margin-right: auto; text-align: center;" class="mb-3 text-center">
                         <label for="firstName" class="form-label"><b>First name</b></label>
                         <input type="text" class="form-control" id="firstName1" name="firstName" th:value="${user.firstName}" placeholder="Enter first name">
@@ -139,7 +139,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form th:action="@{'/admin/delete/' + ${user.id}}" method="post">
+                    <form th:action="@{'/admin/delete/' + ${user.id}}" th:method="delete">
                         <div style="width: 400px; height: 50px; margin-left: auto; margin-right: auto; text-align: center;"
                             class="mb-3 text-center">
                             <label for="firstName" class="form-label"><b>First name</b></label>
