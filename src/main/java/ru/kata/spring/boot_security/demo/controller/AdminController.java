@@ -1,69 +1,49 @@
 package ru.kata.spring.boot_security.demo.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.kata.spring.boot_security.demo.model.User;
-import ru.kata.spring.boot_security.demo.service.RoleService;
 import ru.kata.spring.boot_security.demo.service.UserService;
 
+import java.util.List;
 
-@Controller
-@RequestMapping("/admin")
-@PreAuthorize("hasRole('ROLE_ADMIN')")
+@RestController
+@RequestMapping("/api/admin")
 public class AdminController {
     private final UserService userService;
-    private final RoleService roleService;
 
     @Autowired
-    public AdminController(UserService userService, RoleService roleService) {
+    public AdminController(UserService userService) {
         this.userService = userService;
-        this.roleService = roleService;
     }
 
-    @GetMapping("/")
-    public String getAllUsers(Model model) {
-        model.addAttribute("users", userService.getAllUsers());
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        User user = (User) authentication.getPrincipal();
-        model.addAttribute("user", user);
-        return "users";
+    @GetMapping
+    public List<User> getAllUsers() {
+        return userService.getAllUsers();
     }
-
 
     @GetMapping("/{id}")
-    public String getById(Model model, @PathVariable int id) {
-        model.addAttribute("user", userService.getById(id));
-        return "user";
+    public User getUserById(@PathVariable int id) {
+        return userService.getById(id);
     }
 
-    @GetMapping("/new")
-    public String newUser(Model model) {
-        model.addAttribute("user", new User());
-        model.addAttribute("allRoles", roleService.getAllRoles());
-        return "new-user";
-    }
-
-    @PostMapping("/new")
-    public String addUser(@ModelAttribute("user") User user) {
+    @PostMapping
+    public void addUser(@RequestBody User user) {
         userService.addUser(user);
-        return "redirect:/admin/";
     }
 
-    @PatchMapping("/{id}")
-    public String update(@ModelAttribute("user") User user, @PathVariable("id") int id) {
+    @PutMapping("/{id}")
+    public User updateUser(@PathVariable int id, @RequestBody User user) {
+        user.setId(id);
         userService.update(user);
-        return "redirect:/admin/";
+        return user;
     }
 
-
-    @DeleteMapping("/delete/{id}")
-    public String delete(@PathVariable int id) {
+    @DeleteMapping("/{id}")
+    public ResponseEntity<HttpStatus> deleteUser(@PathVariable int id) {
         userService.delete(id);
-        return "redirect:/admin/";
+        return ResponseEntity.ok().build();
     }
 }
