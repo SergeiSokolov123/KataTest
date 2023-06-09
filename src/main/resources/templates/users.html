@@ -153,34 +153,35 @@
         </div>
     </div>
 </div>
-<div id="createUserFormContainer" style="display: none;">
-    <h4><b>Create New User</b></h4>
-    <form id="createUserForm" onsubmit="event.preventDefault(); createUser();">
+<div id="createUserFormContainer" style="display: none; text-align: center;">
+    <h4 style="margin-right: 550px;"><b>Add New User</b></h4>
+    <form id="createUserForm" onsubmit="event.preventDefault(); createUser();" style="display: inline-block;">
         <!-- Форма создания пользователя -->
-        <div class="mb-3">
+        <div class="mb-3" style="width: 160%;">
             <label for="createName"><b>Name:</b></label>
             <input type="text" class="form-control" id="createName" placeholder="Name">
         </div>
-        <div class="mb-3">
+        <div class="mb-3" style="width: 160%;">
             <label for="createLastName"><b>Last Name:</b></label>
             <input type="text" class="form-control" id="createLastName" placeholder="Last Name">
         </div>
-        <div class="mb-3">
+        <div class="mb-3" style="width: 160%;">
             <label for="createUsername"><b>Username:</b></label>
             <input type="text" class="form-control" id="createUsername" placeholder="Username">
         </div>
-        <div class="mb-3">
+        <div class="mb-3" style="width: 160%;">
             <label for="createPassword"><b>Password:</b></label>
             <input type="password" class="form-control" id="createPassword" placeholder="Password">
         </div>
-        <div class="mb-3">
+        <div class="mb-3" style="width: 160%;">
             <label for="createRole"><b>Role:</b></label>
             <input type="text" class="form-control" id="createRole" placeholder="Role">
         </div>
-        <div class="modal-footer d-flex justify-content-end" style="margin-top: 25px;">
+        <div class="modal-footer" style="text-align: center;"  >
             <button type="button" class="btn btn-secondary me-1" onclick="cancelCreateUser()">Cancel</button>
-            <button type="submit" class="btn btn-primary">Create User</button>
+            <button style="background-color: rgb(2, 80, 2);" type="submit" class="btn btn-primary">Add new user</button>
         </div>
+
     </form>
 </div>
 

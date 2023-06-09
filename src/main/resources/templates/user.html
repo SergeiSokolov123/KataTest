@@ -23,8 +23,11 @@
         <div class="col-2">
             <ul class="nav flex-column">
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="/admin/"
+                    <a class="nav-link active" aria-current="page" href="/user/"
                        style="background-color: rgb(25, 94, 243); color: white;">User</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="/admin/" id="adminLink" style="display: none;">Admin</a>
                 </li>
             </ul>
         </div>
@@ -58,6 +61,7 @@
             currentUser = data;
             console.log(data);
             showOneUser(currentUser);
+            hideAdminButton(currentUser);
         });
 
     function showOneUser(user) {
@@ -73,6 +77,15 @@
         temp += "<td>" + user.roles.map(role => role.name).join(", ") + "</td>";
         temp += "</tr>";
         document.getElementById("oneUserRow").innerHTML = temp;
+    }
+
+    function hideAdminButton(user) {
+        const adminLink = document.getElementById("adminLink");
+        if (user.roles.find(role => role.name === "USER")) {
+            adminLink.style.display = "none";
+        } else {
+            adminLink.style.display = "";
+        }
     }
 </script>
 

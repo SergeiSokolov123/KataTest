@@ -28,8 +28,8 @@ public class Init {
 
     @PostConstruct
     public void init() {
-        Role role = new Role("ROLE_ADMIN");
-        Role role1 = new Role("ROLE_USER");
+        Role role = new Role("ADMIN");
+        Role role1 = new Role("USER");
         roleRepository.save(role);
         roleRepository.save(role1);
 
@@ -40,6 +40,6 @@ public class Init {
         User user = new User("admin", "admin",  "admin@test.ru", "123", adminRole);
        User user1 = new User("user","user","user@test.ru","1234",userRole);
         userServiceImpl.addUser(user);
-    userServiceImpl.addUser(user1);
+        userServiceImpl.addUser(user1);
     }
 }

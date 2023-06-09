@@ -182,10 +182,10 @@ function createUser() {
   };
 var role = $('#createRole').val(); // Получить значение поля ввода роли
 
-  if (role === 'ROLE_ADMIN') {
-    user.roles.push({ id: 1, name: 'ROLE_ADMIN' }); // Добавить роль "ADMIN"
-  } else if (role === 'ROLE_USER') {
-    user.roles.push({ id: 2, name: 'ROLE_USER' }); // Добавить роль "USER"
+  if (role === 'ADMIN') {
+    user.roles.push({ id: 1, name: 'ADMIN' }); // Добавить роль "ADMIN"
+  } else if (role === 'USER') {
+    user.roles.push({ id: 2, name: 'USER' }); // Добавить роль "USER"
   }
   $.ajax({
     url: '/api/admin',
